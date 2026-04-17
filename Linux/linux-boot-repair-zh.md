@@ -1,85 +1,83 @@
-# My Linux Boot Repair Experience - 2025-7-7
+# 我的 Linux 启动修复经历 - 2025-7-7
 
-> 💡 Background  
-> By default, when you install an operating system, an EFI partition is created in a specific location on the disk. The UEFI/BIOS uses this partition to boot the system correctly. However, if you install another OS (e.g., Windows) on the same disk, the new installer may overwrite the existing EFI partition, making the previous OS unbootable. This happened to me – Windows overwrote my Linux bootloader.
+> 💡 背景  
+> 默认情况下，安装操作系统时会在磁盘特定位置创建一个 EFI 分区。UEFI/BIOS 使用这个分区来正确启动系统。但如果你在同一块磁盘上安装另一个操作系统（比如 Windows），新的安装程序可能会覆盖原有的 EFI 分区，导致之前的系统无法启动。我就遇到了这种情况 —— Windows 把我的 Linux 引导加载程序覆盖了。
 
-## 1. Preparing for Repair
+## 1. 准备修复
 
-I didn't have a Linux installation medium at hand, so I downloaded the ISO image of my distribution from the official website and wrote it to a USB drive. Then I entered the UEFI/BIOS settings, **disabled Secure Boot and Fast Boot**, saved, rebooted, and booted into the Live environment from the USB drive.
+我没有现成的 Linux 安装介质，所以先从官网下载了我用的发行版 ISO 镜像，然后用刻录软件写入 U 盘。接着进入 UEFI/BIOS 设置，**禁用 Secure Boot 和 Fast Boot**，保存重启，从 U 盘启动到 Live 环境。
 
-> 💡 If you're using a multi‑system installer like Ventoy and it hangs during normal boot, try the GRUB boot mode.
+> 💡 如果使用 Ventoy 这类多系统安装介质启动时卡住，可以试试 GRUB 引导模式。
 
-## 2. Mounting Partitions
+## 2. 挂载分区
 
-In the Live environment, I used `lsblk` and `fdisk -l` to check the disk partitions, identifying which one was my Linux root partition and which was the EFI partition (typically 100–500 MB, with a vfat filesystem). The image below shows the partition layout as seen in DiskGenius:
+在 Live 环境中，我先用 `lsblk` 和 `fdisk -l` 查看磁盘分区情况，确认哪个是 Linux 根分区、哪个是 EFI 分区（EFI 分区通常 100~500 MB，文件系统类型为 vfat）。下图是 DiskGenius 中看到的分区布局：
 
-![Partition layout in DiskGenius](../src/img/image.png)
+![DiskGenius 中的分区布局](../src/img/image.png)
 
-Then I mounted them:
+然后依次挂载：
 
 ```bash
-mount /dev/nvme0n1p5 /mnt           # mount root partition (adjust to your setup)
-mount /dev/nvme0n1p1 /mnt/boot/efi  # mount EFI partition
+mount /dev/nvme0n1p5 /mnt           # 挂载根分区（以我的实际分区为例）
+mount /dev/nvme0n1p1 /mnt/boot/efi  # 挂载 EFI 分区
 mount --bind /dev /mnt/dev
 mount --bind /proc /mnt/proc
 mount --bind /sys /mnt/sys
 mount --bind /run /mnt/run
 ```
 
-(I don't have separate `/home` or `/boot` partitions, so I skipped them. However, after experiencing this boot issue again later – especially after manually installing Arch Linux step by step – I gained a deeper understanding. In fact, on Arch you don't need to mount so many directories; the essential ones like `/dev`, `/proc`, `/sys`, `/run` are automatically mounted for you.)
+（我并没有独立的 `/home` 或 `/boot` 分区，所以省略了它们. 但我事后再次经历这种引导问题，尤其是后面我手动一步一步的安装 *Arch Linux* 后，有了进一步理解,其实在Arch上是不需要挂载这么多, 默认是会自动帮你挂载 /dev，/proc，/sys，/run，这些必需目录的）
 
-## 3. Chroot and GRUB Repair
+## 3. 进入 chroot 并修复 GRUB
 
 ```bash
-arch-chroot /mnt   # I use Arch Linux, so this is the command
-# Confirm boot mode
-[ -d /sys/firmware/efi ] && echo "UEFI" || echo "BIOS"   # output: UEFI
-# Reinstall GRUB
+arch-chroot /mnt   # 我用的 Arch Linux，所以用这个命令
+# 确认引导模式
+[ -d /sys/firmware/efi ] && echo "UEFI" || echo "BIOS"   # 输出 UEFI
+# 重新安装 GRUB
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
-# Generate configuration
+# 生成配置
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-Exit chroot and reboot:
+退出 chroot 并重启：
 
 ```bash
 exit
 reboot
 ```
 
-## 4. Issues Encountered After Repair
+## 4. 修复后遇到的问题
 
-After rebooting, I didn't directly get into Linux – I ran into two common problems.
+重启后，我并没有直接进入 Linux —— 先是遇到了两个常见问题。
 
-### Issue 1: Only GRUB Shell
+### 问题一：只进入 GRUB shell
 
-The screen showed a `grub>` prompt with no menu.  
-**Solution**: Regenerate the GRUB configuration. I booted into the Live environment again, mounted the partitions, chrooted, and ran `grub-mkconfig -o /boot/grub/grub.cfg`.
+屏幕上出现 `grub>` 提示符，没有菜单。  
+**解决方法**：重新生成 GRUB 配置。我再次启动 Live 环境，挂载分区并 chroot，然后执行 `grub-mkconfig -o /boot/grub/grub.cfg`。
 
-### Issue 2: After fixing Issue 1, Only Windows Boot Manager Appeared
+### 问题二：修复问题一后，只出现 Windows Boot Manager
 
-After rebooting, the system went straight into Windows; no Linux option was visible.  
-**Cause**: The `/boot` directory was missing Linux kernel files (`vmlinuz-linux` and `initramfs` images).  
-**Solution**: In the Live environment, after mounting the partitions, I checked `/boot` and `/boot/efi`. The kernel files were actually inside `/boot/efi`. I copied them to `/boot` and then chrooted again to run `grub-mkconfig`.
+重启后直接进了 Windows，看不到 Linux 选项。  
+**原因**：`/boot` 目录下缺少 Linux 内核文件（`vmlinuz-linux` 和 `initramfs` 镜像）。  
+**解决方法**：在 Live 环境中挂载分区后，检查 `/boot` 和 `/boot/efi`，发现内核文件实际存在于 `/boot/efi` 中。我把它们复制到 `/boot` 目录，然后重新 chroot 并生成 GRUB 配置。
 
 ```bash
 cp /mnt/boot/efi/vmlinuz-linux /mnt/boot/
 cp /mnt/boot/efi/initramfs-linux.img /mnt/boot/
-# chroot again and run grub-mkconfig
+# 再次 chroot 并运行 grub-mkconfig
 ```
 
-After these two steps, the GRUB menu finally showed both Linux and Windows entries.
+完成这两步后，GRUB 菜单终于正常显示了 Linux 和 Windows 两个选项。
 
-## 5. Final Kernel Panic (QR Code Auto-Repair)
+## 5. 最后的内核报错（二维码倒计时自动修复）
 
-I eagerly chose Linux to boot, but an error appeared, as shown in the image below. There was a **QR code** in the middle of the screen.
+我满怀期待地选择 Linux 启动，结果出现报错，![如图所示](../src/img/kenerl.png)屏幕中间有一个**二维码**，。
 
-![Error screenshot](../src/img/kenerl.png)
+然后回车重启。这一次，Linux 顺利启动，进入了桌面！
 
-Then I pressed Enter to reboot. This time, Linux booted successfully and I reached the desktop!
+事后我猜测，这个二维码可能是我的发行版（或者 systemd）内置的错误报告/自动修复机制，倒计时结束后系统尝试了应急恢复并成功修复了内核或 initramfs 的问题。总之，省去了我手动排查的麻烦。
 
-I later guessed that the QR code was part of my distribution's (or systemd's) built‑in error reporting / automatic repair mechanism. After the countdown ended (or after pressing Enter), the system attempted an emergency recovery and successfully fixed the kernel or initramfs issue. In any case, it saved me from manual troubleshooting.
+## 6. 总结
 
-## 6. Conclusion
-
-From Windows overwriting the bootloader, to GRUB shell, missing kernel, and finally a kernel panic with a QR code auto‑repair – the whole process was winding, but following the standard steps eventually solved everything. If you encounter similar problems, I hope my experience can serve as a reference.
+从 Windows 覆盖引导，到 GRUB shell、缺少内核，再到内核报错二维码自动修复 —— 整个过程虽然曲折，但按照标准步骤一步步来，最终都解决了。如果你也遇到类似问题，希望我的经历能给你一些参考。
