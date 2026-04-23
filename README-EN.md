@@ -1,5 +1,5 @@
 # Kawhing's Blog
-[中文](./README-EN.md)
+[中文](./README.md)
 
 ## My Linux Boot Repair
 
