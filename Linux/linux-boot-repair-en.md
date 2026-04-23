@@ -1,5 +1,5 @@
 # My Linux Boot Repair Experience - 2025-7-7
-
+[Return to Previous Page](../README-EN.md)
 > 💡 Background  
 > By default, when you install an operating system, an EFI partition is created in a specific location on the disk. The UEFI/BIOS uses this partition to boot the system correctly. However, if you install another OS (e.g., Windows) on the same disk, the new installer may overwrite the existing EFI partition, making the previous OS unbootable. This happened to me – Windows overwrote my Linux bootloader.
 
