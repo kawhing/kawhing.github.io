@@ -1,6 +1,6 @@
 # If This Is Your First Attempt, I Recommend You Apply to KeRuan (Translated by Google Translate)
 
-[返回上一页](../../README-EN.md)
+[Return to Previous Page](../../README-EN.md)
 
 > Reposted from [Lanqiao Cup @ Douzun Qiangzhe](https://www.lanqiao.cn/questions/1000339/)
 
