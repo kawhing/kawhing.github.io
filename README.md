@@ -1,6 +1,6 @@
 # kawhing的博客
 
-[English](./README-EN.md)
+[English](./README-en.md)
 
 ## 我的Linux 引导修复
 
@@ -9,5 +9,8 @@
 ## 心灵之语
 
 ### 考研
--  [我推荐你考科软](./Reflections/22408/KeRuan.md)
+-  [我推荐你考科软](./Reflections/22408/keruan.md)
  
+### 日记和技术日志
+
+- [**2026年**](./Reflections/2026.md)

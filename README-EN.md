@@ -1,4 +1,5 @@
 # Kawhing's Blog
+
 [中文](./README.md)
 
 ## My Linux Boot Repair
@@ -8,4 +9,8 @@
 ## Reflections
 
 ### Postgraduate Entrance Exams
-- For fun: [I recommend you apply for the "KeRuan" program](./Reflections/22408/KeRuan-EN.md)
+- For fun: [I recommend you apply for the "KeRuan" program](./Reflections/22408/keruan-en.md)
+
+### Diaries and Technical Logs
+
+- [**2026**](./Reflections/2026-en.md)
