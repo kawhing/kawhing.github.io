@@ -1,0 +1,38 @@
+baseURL = "https://kawhing.github.io/"
+title = "kawhing's Blog"
+theme = "PaperMod"
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = true
+
+[languages]
+  [languages.en]
+    languageName = "English"
+    weight = 1
+    [languages.en.menu]
+      [[languages.en.menu.main]]
+        name = "Posts"
+        url = "/en/posts/"
+        weight = 1
+      [[languages.en.menu.main]]
+        name = "中文"
+        url = "/zh/"
+        weight = 2
+
+  [languages.zh]
+    languageName = "中文"
+    weight = 2
+    [languages.zh.menu]
+      [[languages.zh.menu.main]]
+        name = "文章"
+        url = "/zh/posts/"
+        weight = 1
+      [[languages.zh.menu.main]]
+        name = "English"
+        url = "/en/"
+        weight = 2
+
+[params]
+  defaultTheme = "dark"
+  ShowReadingTime = true
+  ShowShareButtons = false
+  ShowPostNavLinks = true
