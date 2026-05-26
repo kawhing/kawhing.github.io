@@ -1,0 +1,98 @@
+<!doctype html><html lang=zh dir=auto data-theme=dark><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>修复git网络、Power Shell启动慢和Git repo 换行符导致工作区修改的问题 | kawhing's Blog</title><meta name=keywords content><meta name=description content="解决 WSL下的 git 代理 问题
+首先，WSL的本身就是虚拟机，自己有着自己的网络协议栈，如果硬要实现直接被实体机直接代理就麻烦许多，所以我只是通过实体机的局域网IP来局域网代理
+a
+git config --global http.proxy http://*.*.*.*:10808
+git config --global https.proxy http://*.*.*.*:10808
+还有的 ssh 能用http代理，通过 connect-proxy
+apt install -y connect-proxy
+Host github.com
+    HostName ssh.github.com
+    Port 443
+    User git
+    IdentityFile path/to/ssh_private_key
+    ProxyCommand connect-proxy -H <Porxy IP>:<port> %h %p
+解决 PowerShell 启动加载速度慢
+使得 PowerShell 启动加速 1418ms 到秒开
+问题：
+Loading personal and system profiles took 1418ms。D:\UserName\Documents\PowerShell\profile.ps1 里 Conda 初始化每次启动调用 conda.exe，加上 Windows Defender 扫描。
+解决："><meta name=author content><link rel=canonical href=https://kawhing.github.io/zh/posts/2026-04-30/><link crossorigin=anonymous href=/assets/css/stylesheet.cd9298b33628769aa1bc1acebbbfd7aa11ce81dfe03484d479e1907760249a1d.css integrity="sha256-zZKYszYodpqhvBrOu7/XqhHOgd/gNITUeeGQd2Akmh0=" rel="preload stylesheet" as=style><link rel=icon href=https://kawhing.github.io/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://kawhing.github.io/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://kawhing.github.io/favicon-32x32.png><link rel=apple-touch-icon href=https://kawhing.github.io/apple-touch-icon.png><link rel=mask-icon href=https://kawhing.github.io/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=en href=https://kawhing.github.io/en/posts/2026-04-30/><link rel=alternate hreflang=zh href=https://kawhing.github.io/zh/posts/2026-04-30/><noscript><style>#theme-toggle,.top-link{display:none}</style></noscript><script>localStorage.getItem("pref-theme")==="light"&&(document.querySelector("html").dataset.theme="light")</script><meta property="og:url" content="https://kawhing.github.io/zh/posts/2026-04-30/"><meta property="og:site_name" content="kawhing's Blog"><meta property="og:title" content="修复git网络、Power Shell启动慢和Git repo 换行符导致工作区修改的问题"><meta property="og:description" content="解决 WSL下的 git 代理 问题 首先，WSL的本身就是虚拟机，自己有着自己的网络协议栈，如果硬要实现直接被实体机直接代理就麻烦许多，所以我只是通过实体机的局域网IP来局域网代理 a
+git config --global http.proxy http://*.*.*.*:10808 git config --global https.proxy http://*.*.*.*:10808 还有的 ssh 能用http代理，通过 connect-proxy
+apt install -y connect-proxy Host github.com HostName ssh.github.com Port 443 User git IdentityFile path/to/ssh_private_key ProxyCommand connect-proxy -H <Porxy IP>:<port> %h %p 解决 PowerShell 启动加载速度慢 使得 PowerShell 启动加速 1418ms 到秒开
+问题： Loading personal and system profiles took 1418ms。D:\UserName\Documents\PowerShell\profile.ps1 里 Conda 初始化每次启动调用 conda.exe，加上 Windows Defender 扫描。
+解决："><meta property="og:locale" content="zh"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2026-04-30T00:00:00+00:00"><meta property="article:modified_time" content="2026-04-30T00:00:00+00:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="修复git网络、Power Shell启动慢和Git repo 换行符导致工作区修改的问题"><meta name=twitter:description content="解决 WSL下的 git 代理 问题 首先，WSL的本身就是虚拟机，自己有着自己的网络协议栈，如果硬要实现直接被实体机直接代理就麻烦许多，所以我只是通过实体机的局域网IP来局域网代理 a
+git config --global http.proxy http://*.*.*.*:10808 git config --global https.proxy http://*.*.*.*:10808 还有的 ssh 能用http代理，通过 connect-proxy
+apt install -y connect-proxy Host github.com HostName ssh.github.com Port 443 User git IdentityFile path/to/ssh_private_key ProxyCommand connect-proxy -H <Porxy IP>:<port> %h %p 解决 PowerShell 启动加载速度慢 使得 PowerShell 启动加速 1418ms 到秒开
+问题： Loading personal and system profiles took 1418ms。D:\UserName\Documents\PowerShell\profile.ps1 里 Conda 初始化每次启动调用 conda.exe，加上 Windows Defender 扫描。
+解决："><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://kawhing.github.io/zh/posts/"},{"@type":"ListItem","position":2,"name":"修复git网络、Power Shell启动慢和Git repo 换行符导致工作区修改的问题","item":"https://kawhing.github.io/zh/posts/2026-04-30/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"修复git网络、Power Shell启动慢和Git repo 换行符导致工作区修改的问题","name":"修复git网络、Power Shell启动慢和Git repo 换行符导致工作区修改的问题","description":"解决 WSL下的 git 代理 问题 首先，WSL的本身就是虚拟机，自己有着自己的网络协议栈，如果硬要实现直接被实体机直接代理就麻烦许多，所以我只是通过实体机的局域网IP来局域网代理 a\ngit config --global http.proxy http://*.*.*.*:10808 git config --global https.proxy http://*.*.*.*:10808 还有的 ssh 能用http代理，通过 connect-proxy\napt install -y connect-proxy Host github.com HostName ssh.github.com Port 443 User git IdentityFile path/to/ssh_private_key ProxyCommand connect-proxy -H \u0026lt;Porxy IP\u0026gt;:\u0026lt;port\u0026gt; %h %p 解决 PowerShell 启动加载速度慢 使得 PowerShell 启动加速 1418ms 到秒开\n问题： Loading personal and system profiles took 1418ms。D:\\UserName\\Documents\\PowerShell\\profile.ps1 里 Conda 初始化每次启动调用 conda.exe，加上 Windows Defender 扫描。\n解决：\n","keywords":[],"articleBody":"解决 WSL下的 git 代理 问题 首先，WSL的本身就是虚拟机，自己有着自己的网络协议栈，如果硬要实现直接被实体机直接代理就麻烦许多，所以我只是通过实体机的局域网IP来局域网代理 a\ngit config --global http.proxy http://*.*.*.*:10808 git config --global https.proxy http://*.*.*.*:10808 还有的 ssh 能用http代理，通过 connect-proxy\napt install -y connect-proxy Host github.com HostName ssh.github.com Port 443 User git IdentityFile path/to/ssh_private_key ProxyCommand connect-proxy -H : %h %p 解决 PowerShell 启动加载速度慢 使得 PowerShell 启动加速 1418ms 到秒开\n问题： Loading personal and system profiles took 1418ms。D:\\UserName\\Documents\\PowerShell\\profile.ps1 里 Conda 初始化每次启动调用 conda.exe，加上 Windows Defender 扫描。\n解决：\n删掉 D:\\UserName\\Documents\\PowerShell\\profile.ps1 里的 conda initialize 代码块（#region 到 #endregion 共5行）\nAdd-MpPreference -ExclusionProcess “pwsh.exe” Add-MpPreference -ExclusionPath “D:\\Software\\PowerShell\\7” Add-MpPreference -ExclusionPath “D:\\UserName\\Documents\\PowerShell”\n[System.Environment]::SetEnvironmentVariable(‘POWERSHELL_UPDATECHECK’, ‘Off’, ‘User’)\ncn 函数还在 Microsoft.PowerShell_profile.ps1 里，输入 cn 激活 Conda。\n最终配置\n# 1. 强力禁止 PowerShell 启动时联网检查更新（节省几百毫秒） $env:POWERSHELL_UPDATECHECK = 'Off' # 2. 定义 Conda 按需加载函数 # 以后想用 Conda 时，在终端输入 cn 即可，平时不加载，保证秒开 function cn { $Env:CONDA_EXE = \"path/to/Anaconda3\\Scripts\\conda.exe\" $Env:_CE_M = \"\" $Env:_CE_CONDA = \"\" $Env:_CONDA_ROOT = \"path/to/Anaconda3\" $Env:_CONDA_EXE = \"path/to/Anaconda3/Scripts/conda.exe\" $CondaModuleArgs = @{ChangePs1 = $True} # 只有执行 cn 命令时才会导入这个沉重的模块 Import-Module \"$Env:_CONDA_ROOT\\shell\\condabin\\Conda.psm1\" -ArgumentList $CondaModuleArgs Remove-Variable CondaModuleArgs Write-Host \"--- Conda 环境已激活 ---\" -ForegroundColor Green } Linux 与 Windows 换行符导致的 git 提示文件修改 创建 .gitattributes\n* text=auto *.cpp text eol=lf *.h text eol=lf *.c text eol=lf *.hpp text eol=lf *.txt text eol=lf *.md text eol=lf *.json text eol=lf *.xml text eol=lf *.yml text eol=lf *.yaml text eol=lf *.sh text eol=lf Makefile text eol=lf *.sln text eol=crlf *.vcxproj text eol=crlf *.vcxproj.filters text eol=crlf *.vcxproj.user text eol=crlf *.png binary *.jpg binary *.jpeg binary *.gif binary *.ico binary *.exe binary *.dll binary *.lib binary git add --renormalize . git commit -m \"build: force all text files to LF for cross-platform consistency\" ","wordCount":"246","inLanguage":"zh","datePublished":"2026-04-30T00:00:00Z","dateModified":"2026-04-30T00:00:00Z","mainEntityOfPage":{"@type":"WebPage","@id":"https://kawhing.github.io/zh/posts/2026-04-30/"},"publisher":{"@type":"Organization","name":"kawhing's Blog","logo":{"@type":"ImageObject","url":"https://kawhing.github.io/favicon.ico"}}}</script></head><body id=top><header class=header><nav class=header-nav><div class=logo><a href=https://kawhing.github.io/zh/ accesskey=h title="kawhing's Blog (Alt + H)">kawhing's Blog</a><div class=logo-switches><button id=theme-toggle class=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
+<svg class="moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button><span class=nav-sep>|</span><ul class=lang-menu><li><a href=https://kawhing.github.io/en/ title=English aria-label=English>En</a></li></ul></div></div><ul id=menu class=menu><li><a href=https://kawhing.github.io/zh/posts/ title=文章><span>文章</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><h1 class="post-title entry-hint-parent">修复git网络、Power Shell启动慢和Git repo 换行符导致工作区修改的问题</h1><div class=post-meta><span title='2026-04-30 00:00:00 +0000 UTC'>2026年4月30日</span>&nbsp;·&nbsp;<span>2 分钟</span>&nbsp;|&nbsp;<span>语言:</span><ul class=i18n_list><li><a href=https://kawhing.github.io/en/posts/2026-04-30/>En</a></li></ul></div></header><div class="post-content md-content"><h2 id=解决-wsl下的-git-代理-问题>解决 <strong>WSL</strong>下的 <strong>git</strong> 代理 问题<a hidden class=anchor aria-hidden=true href=#解决-wsl下的-git-代理-问题>#</a></h2><p>首先，WSL的本身就是虚拟机，自己有着自己的网络协议栈，如果硬要实现直接被实体机直接代理就麻烦许多，所以我只是通过实体机的局域网<em>IP</em>来局域网代理
+a</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>git config --global http.proxy http://*.*.*.*:10808
+</span></span><span style=display:flex><span>git config --global https.proxy http://*.*.*.*:10808
+</span></span></code></pre></div><p>还有的 <em>ssh</em> 能用http代理，通过 <strong>connect-proxy</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>apt install -y connect-proxy
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>Host github.com
+</span></span><span style=display:flex><span>    HostName ssh.github.com
+</span></span><span style=display:flex><span>    Port <span style=color:#ae81ff>443</span>
+</span></span><span style=display:flex><span>    User git
+</span></span><span style=display:flex><span>    IdentityFile path/to/ssh_private_key
+</span></span><span style=display:flex><span>    ProxyCommand connect-proxy -H &lt;Porxy IP&gt;:&lt;port&gt; %h %p
+</span></span></code></pre></div><h2 id=解决-powershell-启动加载速度慢>解决 PowerShell 启动加载速度慢<a hidden class=anchor aria-hidden=true href=#解决-powershell-启动加载速度慢>#</a></h2><p>使得 <em>PowerShell</em> 启动加速 <em>1418ms</em> 到秒开</p><p>问题：
+Loading personal and system profiles took 1418ms。D:\UserName\Documents\PowerShell\profile.ps1 里 Conda 初始化每次启动调用 conda.exe，加上 Windows Defender 扫描。</p><p>解决：</p><ol><li><p>删掉 D:\UserName\Documents\PowerShell\profile.ps1 里的 conda initialize 代码块（#region 到 #endregion 共5行）</p></li><li><p>Add-MpPreference -ExclusionProcess &ldquo;pwsh.exe&rdquo;
+Add-MpPreference -ExclusionPath &ldquo;D:\Software\PowerShell\7&rdquo;
+Add-MpPreference -ExclusionPath &ldquo;D:\UserName\Documents\PowerShell&rdquo;</p></li><li><p>[System.Environment]::SetEnvironmentVariable(&lsquo;POWERSHELL_UPDATECHECK&rsquo;, &lsquo;Off&rsquo;, &lsquo;User&rsquo;)</p></li><li><p>cn 函数还在 Microsoft.PowerShell_profile.ps1 里，输入 cn 激活 Conda。</p></li></ol><p>最终配置</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-ps1 data-lang=ps1><span style=display:flex><span><span style=color:#75715e># 1. 强力禁止 PowerShell 启动时联网检查更新（节省几百毫秒）</span>
+</span></span><span style=display:flex><span>$env:POWERSHELL_UPDATECHECK = <span style=color:#e6db74>&#39;Off&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 2. 定义 Conda 按需加载函数</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 以后想用 Conda 时，在终端输入 cn 即可，平时不加载，保证秒开</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>function</span> cn {
+</span></span><span style=display:flex><span>    $Env:CONDA_EXE = <span style=color:#e6db74>&#34;path/to/Anaconda3\Scripts\conda.exe&#34;</span>
+</span></span><span style=display:flex><span>    $Env:_CE_M = <span style=color:#e6db74>&#34;&#34;</span>
+</span></span><span style=display:flex><span>    $Env:_CE_CONDA = <span style=color:#e6db74>&#34;&#34;</span>
+</span></span><span style=display:flex><span>    $Env:_CONDA_ROOT = <span style=color:#e6db74>&#34;path/to/Anaconda3&#34;</span>
+</span></span><span style=display:flex><span>    $Env:_CONDA_EXE = <span style=color:#e6db74>&#34;path/to/Anaconda3/Scripts/conda.exe&#34;</span>
+</span></span><span style=display:flex><span>    $CondaModuleArgs = @{ChangePs1 = $True}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 只有执行 cn 命令时才会导入这个沉重的模块</span>
+</span></span><span style=display:flex><span>    Import-Module <span style=color:#e6db74>&#34;</span>$Env:_CONDA_ROOT<span style=color:#e6db74>\shell\condabin\Conda.psm1&#34;</span> -ArgumentList $CondaModuleArgs
+</span></span><span style=display:flex><span>    Remove-Variable CondaModuleArgs
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    Write-Host <span style=color:#e6db74>&#34;--- Conda 环境已激活 ---&#34;</span> -ForegroundColor Green
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h2 id=linux-与-windows-换行符导致的-git-提示文件修改><em>Linux</em> 与 <em>Windows</em> 换行符导致的 <em>git</em> 提示文件修改<a hidden class=anchor aria-hidden=true href=#linux-与-windows-换行符导致的-git-提示文件修改>#</a></h2><p>创建 <em>.gitattributes</em></p><pre tabindex=0><code class=language-.gitattributes data-lang=.gitattributes>* text=auto
+
+*.cpp text eol=lf
+*.h text eol=lf
+*.c text eol=lf
+*.hpp text eol=lf
+*.txt text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.xml text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.sh text eol=lf
+Makefile text eol=lf
+
+*.sln text eol=crlf
+*.vcxproj text eol=crlf
+*.vcxproj.filters text eol=crlf
+*.vcxproj.user text eol=crlf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.exe binary
+*.dll binary
+*.lib binary
+</code></pre><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>git add --renormalize .
+</span></span><span style=display:flex><span>git commit -m <span style=color:#e6db74>&#34;build: force all text files to LF for cross-platform consistency&#34;</span>
+</span></span></code></pre></div></div><footer class=post-footer><ul class=post-tags></ul><nav class=paginav><a class=prev href=https://kawhing.github.io/zh/posts/2026-05-01-tim/><span class=title>« 上一页</span>
+<span>个人遇到的TIM 4.0.98 在 Android 16 上报"无法存储文件"问题的见解</span>
+</a><a class=next href=https://kawhing.github.io/zh/posts/2026-04-23-vps-ssh/><span class=title>下一页 »</span>
+<span>解决了通过 SSH 连接 VPS 的一系列环境障碍</span></a></nav></footer></article></main><footer class=footer><span>&copy; 2026 <a href=https://kawhing.github.io/zh/>kawhing's Blog</a></span> ·
+<span>Powered by
+<a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &
+<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top id=top-link class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey=g><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+</a><script>let menu=document.getElementById("menu");if(menu){const e=localStorage.getItem("menu-scroll-position");e&&(menu.scrollLeft=parseInt(e,10)),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}}document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var toplink=document.getElementById("top-link");window.onscroll=function(){const e=window.innerHeight;document.body.scrollTop>e||document.documentElement.scrollTop>e?toplink.classList.remove("hidden"):toplink.classList.add("hidden")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{const e=document.querySelector("html");e.dataset.theme==="dark"?(e.dataset.theme="light",localStorage.setItem("pref-theme","light")):(e.dataset.theme="dark",localStorage.setItem("pref-theme","dark"))})</script></body></html>
