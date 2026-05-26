@@ -8,28 +8,22 @@ defaultContentLanguageInSubdir = true
   [languages.en]
     languageName = "English"
     weight = 1
+    contentDir = "content/en"
     [languages.en.menu]
       [[languages.en.menu.main]]
         name = "Posts"
-        url = "https://kawhing.github.io/en/posts/"
+        url = "/en/posts"
         weight = 1
-      [[languages.en.menu.main]]
-        name = "中文"
-        url = "https://kawhing.github.io/zh/"
-        weight = 2
 
   [languages.zh]
     languageName = "中文"
     weight = 2
+    contentDir = "content/zh"
     [languages.zh.menu]
       [[languages.zh.menu.main]]
         name = "文章"
-        url = "https://kawhing.github.io/zh/posts/"
+        url = "/zh/posts/"
         weight = 1
-      [[languages.zh.menu.main]]
-        name = "English"
-        url = "https://kawhing.github.io/en/"
-        weight = 2
 
 [params]
   defaultTheme = "dark"
